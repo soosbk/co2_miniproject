@@ -103,7 +103,7 @@ def encrypt_bmp_file1(key, mode, in_filename, out_filename = None):
 	pad = pad_len.to_bytes(1, byteorder='big', signed = False) * pad_len
 	data += pad
 	# Encryption by given mode
-	encryptor = AES.new(key.encode("utf8"), mode)
+	encryptor = AES.new(key, mode)
 	encrypted = convert2RGB(encryptor.encrypt(data)[:original])
 	# Create a new PIL Image object and
 	
@@ -124,27 +124,9 @@ def encrypt_bmp_file2(key, mode, iv,in_filename, out_filename = None):
 	pad = pad_len.to_bytes(1, byteorder='big', signed = False) * pad_len
 	data += pad
 	# Encryption by given mode
-	encryptor = AES.new(key.encode("utf8"), mode,iv.encode("utf8"))
-	encrypted = convert2RGB(encryptor.encrypt(data)[:original])
-	# Create a new PIL Image object and
-	
-	# save the old image data into the new image.
-	im2 = Image.new(im.mode, im.size)
-	im2.putdata(encrypted)
-	# Save image
-	im2.save(out_filename)
-	print ("{} is encrypted.".format(in_filename))
-def encryption_image1(key, mode, iv,in_filename, out_filename = None):
-	# Get RGB data from BMP file
-	im = Image.open(in_filename)
-	data = im.convert("RGB").tobytes()
-	original = len(data)
-	# PKCS7 Padding
-	pad_len = 16 - len(data) % 16
-	pad = pad_len.to_bytes(1, byteorder='big', signed = False) * pad_len
-	data += pad
-	# Encryption by given mode
-	encryptor = AES.new(key.encode("utf8"), mode,iv.encode("utf8"))
+	if mode==AES.MODE_CTR: encryptor = AES.new(key, mode,counter =iv)
+	else: encryptor = AES.new(key, mode,iv)
+
 	encrypted = convert2RGB(encryptor.encrypt(data)[:original])
 	# Create a new PIL Image object and
 	

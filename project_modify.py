@@ -23,9 +23,9 @@ block_size = 128
 aes_mode='ECB'
 output_type=1
 
-key = Random.get_random_bytes(key_size) # 키를 생성함
+key = bytes([0x00] * key_size) # 키를 생성함
     
-IV = Random.get_random_bytes(block_size) # 키를 생성함
+#IV = bytes([0x00] * block_size) # 키를 생성함
     
 
 
@@ -41,8 +41,8 @@ def value_get():
 	global dir_path
 	aes_mode=mode.get()
 	output_type=file_type.get()
-	key=key_input.get()
-	IV=iv_input.get()
+	#key=key_input.get()
+	#IV=iv_input.get()
 
 	window.destroy()
 
@@ -64,7 +64,7 @@ def setAESMode(aes_mode):
 	elif aes_mode=="CBC": aesmode=AES.MODE_CBC
 	elif aes_mode=="CFB": aesmode=AES.MODE_CFB
 	elif aes_mode=="OFB": aesmode=AES.MODE_OFB
-	elif aes_mode=="CTR": aesmode=AES.MODE_CTR
+	elif aes_mode=="CTR": aesmode = AES.MODE_CTR
 	
 
 
@@ -96,6 +96,7 @@ mode['values']=('ECB','CBC','CFB','OFB','CTR')
 #aes_mode.current(0)
 #mode.grid(column=1,row=2)
 mode.pack()
+'''
 Label(window,text="KEY,IV의 hex값을 입력하세요").pack()
 Label(window,text="미입력 시 랜덤값이 입력됩니다.",font=(10)).pack()
 
@@ -108,7 +109,7 @@ key_input.pack()
 iv_input=Entry(window,width=30)
 iv_input.insert(0,IV)
 iv_input.pack()
-	
+	'''
 	
 pcb=Button(window,text="이미지를 선택하세요",command=file_choose_button)
 dcb=Button(window,text="저장할 위치를 선택하세요",command=dir_choose_button)
@@ -133,7 +134,7 @@ if output_type==1: #image
 	print(file_path)
 	if aes_mode=='ECB': encrypt_bmp_file1(key, aesmode,  file_root_bmp, out_filename = file_path)
 	elif aes_mode=="CTR":
-		ctr_e = Counter.new(64, prefix=IV)
+		ctr_e = Counter.new(128)
 		encrypt_bmp_file2(key, aesmode, ctr_e, file_root_bmp, out_filename = file_path)
 
 	else: encrypt_bmp_file2(key, aesmode, IV, file_root_bmp, out_filename = file_path)
