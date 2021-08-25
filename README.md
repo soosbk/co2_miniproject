@@ -3,8 +3,7 @@
 
 
 1. 모듈 설치
-공통 설치 코드 <pre><code>pip install <module> </code></pre>
-* mac os
+<pre><code>pip install pillow</code></pre>
 <pre><code>pip install tkinter</code></pre>
 
 <pre><code>pip install Crypto</code></pre>
