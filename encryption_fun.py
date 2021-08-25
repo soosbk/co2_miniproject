@@ -1,4 +1,5 @@
-from tkinter import filedialog
+import pickle
+
 
 import crypto 
 import sys 
@@ -83,8 +84,11 @@ def encryption_txt1(key, mode,in_filename, out_filename = None): # 2번에서 �
 	encryptor = AES.new(key, mode)
 	encrypted = convert2RGB(encryptor.encrypt(data)[:original])
 	ciphertext = json.dumps(encrypted).encode('utf8')
-	encfile = open(out_filename, 'wb') # 새 텍스트파일을 생성해서 염 
-	encfile.write(ciphertext) # 암호문을 저장함
+
+	encfile = open(out_filename, 'wb') # 새 텍스트파일을 생성해서 염
+	pickle.dump(ciphertext, encfile) 
+	encfile.close() # 암호문을 저장함
+
 	print ("{} is encrypted.".format(in_filename))
 
 def encryption_txt2(key, mode,iv, in_filename, out_filename = None): # 2번에서 호출 시 전달받음 ->ECB
@@ -99,8 +103,11 @@ def encryption_txt2(key, mode,iv, in_filename, out_filename = None): # 2번에�
 	encryptor = AES.new(key, mode)
 	encrypted = convert2RGB(encryptor.encrypt(data)[:original])
 	ciphertext = json.dumps(tuple(iv)+encrypted).encode('utf8')
+
 	encfile = open(out_filename, 'wb') # 새 텍스트파일을 생성해서 염 
-	encfile.write(ciphertext) # 암호문을 저장함
+	pickle.dump(ciphertext, encfile) 
+	encfile.close() # 암호문을 저장함
+
 	print ("{} is encrypted.".format(in_filename))
 
 def encrypt_bmp_file1(key, mode, in_filename, out_filename = None):

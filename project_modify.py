@@ -2,16 +2,15 @@ from tkinter import filedialog
 from tkinter.ttk import *
 from tkinter import *
 from tkinter import messagebox
-import time
-import faulthandler; faulthandler.enable()
+
 from encryption_fun import *
 #AES 128bit -> key size=16bit
 
-from PIL import Image
 import binascii, os, random, struct
-from Crypto import Random
 from Crypto.Util import Counter
 from Crypto.Cipher import AES 
+
+
 #---- fix ----
 key_size = 16
 block_size = 128
@@ -99,24 +98,11 @@ mode=Combobox(window,height=10,state="readonly")
 mode['values']=('ECB','CBC','CFB','OFB','CTR')
 
 mode.pack()
-'''
-Label(window,text="KEY,IV의 hex값을 입력하세요").pack()
-Label(window,text="미입력 시 랜덤값이 입력됩니다.",font=(10)).pack()
 
-
-key_input=Entry(window, width=30)
-key_input.insert(0,key)
-
-key_input.pack()
-
-iv_input=Entry(window,width=30)
-iv_input.insert(0,IV)
-iv_input.pack()
-	'''
 	
 pcb=Button(window,text="이미지를 선택하세요",command=file_choose_button)
 dcb=Button(window,text="저장할 위치를 선택하세요",command=dir_choose_button)
-btn=Button(window,text="선택",command=value_get)
+btn=Button(window,text="제출",command=value_get)
 
 
 pcb.pack()
@@ -124,10 +110,7 @@ dcb.pack()
 btn.pack()
 window.mainloop()
 
-print(aes_mode,output_type)
 
-#file_path=dir_path+file_extension_change(file_root,2,aes_mode)
-#print(file_path)
 setAESMode(aes_mode)
 file_root_bmp=file_extension_change(file_root,1)
 	
@@ -156,41 +139,39 @@ else: #txt
 
 	else: encryption_txt2(key, aesmode, IV, file_root_bmp, out_filename = file_path)
 
-#print(dir_path," ",file_root_bmp)
 
 
-#print(file_path)
+print(file_path)
+
+
+image = Image.open(file_path)
+ 
+image.show()
+#--------- file read --------------
+#read_file(output_type,file_path)
+
+
+
+
 '''
+def end_fun(): result.destory()
+
+
+
 result=Tk()
-result.title("result")	
+result.title("result showing program")	
 result.geometry('320x400')
-   
 
-if aes_mode==1:
-	aesmode=AES.MODE_ECB
-	encrypt_bmp_file1(key, aesmode,  str1, out_filename = dir_path+file_root_bmp[0:-3]+'ecb'+'.bmp')
-
-
-else: dir_path = encryption_txt2(result,file_root_bmp, key,IV, key_size, block_size, aes_mode) 
+if output_type==1: #image file
+	image=PhotoImage(file=file_path)
+	Label(result, image=image).pack()
 
 
+elif output_type==2:
 
+	with open("file.txt") as f: data = f.readlines()[10]
+	Label(result, text="[간단히보기모드]"+data).pack()
 
-
-#"key, iv 입력하기"
-
-
-
-
-
-
-
-
-#text 와 pic choice 경우
-key_size = 16 # 테스트용 
-block_size = 128 # 테스트용
-#aes_mode = 'ECB'
-file_bmp_root=file_extension_change(file_root,1)
-imgfile_ext, key = encryption_txt(window,file_bmp_root, key_size, block_size, aes_mode) 
-print(imgfile_ext)
-'''
+btn=Button(result,text="종료",command=end_fun)
+btn.pack()
+result.mainloop()'''
