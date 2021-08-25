@@ -97,8 +97,7 @@ Label(window,text="AES 모드를 선택하세요").pack()
 
 mode=Combobox(window,height=10,state="readonly")
 mode['values']=('ECB','CBC','CFB','OFB','CTR')
-#aes_mode.current(0)
-#mode.grid(column=1,row=2)
+
 mode.pack()
 '''
 Label(window,text="KEY,IV의 hex값을 입력하세요").pack()
@@ -129,10 +128,10 @@ print(aes_mode,output_type)
 
 #file_path=dir_path+file_extension_change(file_root,2,aes_mode)
 #print(file_path)
-
+setAESMode(aes_mode)
+file_root_bmp=file_extension_change(file_root,1)
+	
 if output_type==1: #image 
-	setAESMode(aes_mode)
-	file_root_bmp=file_extension_change(file_root,1)
 	file_path=dir_path+file_extension_change(file_root_bmp,3,aes_mode)
 	
 	print(file_path)
@@ -145,7 +144,17 @@ if output_type==1: #image
 
 
 else: #txt
-	file_path=dir_path+file_extension_change(file_root,2,aes_mode)
+	file_path=dir_path+file_extension_change(file_root_bmp,2,aes_mode)
+	print(file_path)
+
+	if aes_mode=='ECB': encryption_txt1(key, aesmode, file_root_bmp, out_filename = file_path)
+	
+	elif aes_mode=="CTR":
+		
+		ctr_e = Counter.new(128)
+		encryption_txt2(key, aesmode, ctr_e, file_root_bmp, out_filename = file_path)
+
+	else: encryption_txt2(key, aesmode, IV, file_root_bmp, out_filename = file_path)
 
 #print(dir_path," ",file_root_bmp)
 
