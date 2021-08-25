@@ -2,7 +2,7 @@ from tkinter import filedialog
 from tkinter.ttk import *
 from tkinter import *
 from tkinter import messagebox
-
+import time
 import faulthandler; faulthandler.enable()
 from encryption_fun import *
 #AES 128bit -> key size=16bit
@@ -16,6 +16,11 @@ from Crypto.Cipher import AES
 key_size = 16
 block_size = 128
 
+
+#random한 key, iv 생성
+key = bytes([random.randint(0,block_size) for i in range(0,key_size)]) 
+IV = bytes([random.randint(0,block_size) for i in range(0,key_size)]) 
+
 #--------------
 
 
@@ -23,10 +28,9 @@ block_size = 128
 aes_mode='ECB'
 output_type=1
 
-key = bytes([0x00] * key_size) # 키를 생성함
+
     
-#IV = bytes([0x00] * block_size) # 키를 생성함
-    
+
 
 
 file_root='/'
