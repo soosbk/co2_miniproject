@@ -5,6 +5,9 @@ __pycache__/
 
 # C extensions
 *.so
+#personal file
+dropfile.py
+path.py
 
 # Distribution / packaging
 .Python
