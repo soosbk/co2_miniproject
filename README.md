@@ -8,7 +8,7 @@
 
 <pre><code>pip install Crypto</code></pre>
 <pre><code>pip install pycryptodome</code></pre>
-
+<pre><code>pip install pycrypto</code></pre>
 2. AES-128 사용
 
 
