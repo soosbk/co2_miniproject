@@ -44,8 +44,7 @@ def value_get():
 	global dir_path
 	aes_mode=mode.get()
 	output_type=file_type.get()
-	#key=key_input.get()
-	#IV=iv_input.get()
+	
 
 	window.destroy()
 
@@ -147,31 +146,3 @@ print(file_path)
 image = Image.open(file_path)
  
 image.show()
-#--------- file read --------------
-#read_file(output_type,file_path)
-
-
-
-
-'''
-def end_fun(): result.destory()
-
-
-
-result=Tk()
-result.title("result showing program")	
-result.geometry('320x400')
-
-if output_type==1: #image file
-	image=PhotoImage(file=file_path)
-	Label(result, image=image).pack()
-
-
-elif output_type==2:
-
-	with open("file.txt") as f: data = f.readlines()[10]
-	Label(result, text="[간단히보기모드]"+data).pack()
-
-btn=Button(result,text="종료",command=end_fun)
-btn.pack()
-result.mainloop()'''
